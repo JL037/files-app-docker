@@ -29,7 +29,7 @@ services:
       python manage.py migrate --noinput &&
       uwsgi --ini /app/init.ini"
     ports:
-      - "8080:8000"
+      - "80:8000"
     environment:
       - DB_NAME=postgres
       - DB_USERNAME=postgres
