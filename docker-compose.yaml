@@ -9,7 +9,6 @@ services:
       - .env
     command: >
       sh -c "
-      python manage.py makemigrations --noinput &&
       python manage.py migrate --noinput &&
       uwsgi --ini /app/init.ini"
     ports:
@@ -52,7 +51,7 @@ services:
     profiles:
       - dev
     volumes:
-      - C:/users/USER/db-volume:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     restart: always
     ports:
       - "5433:5432"
