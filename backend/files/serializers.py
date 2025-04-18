@@ -10,6 +10,13 @@ class FileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return File.objects.create(user=self.context['request'].user, **validated_data)
 
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        request = self.context.get('request', None)
+        if 'file' in rep and instance.file and request:
+            rep['file'] = request.build_absolute_uri(instance.file.url)
+        return rep
+        
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

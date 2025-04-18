@@ -18,7 +18,7 @@ def home(request):
 def files(request, format=None):
     if request.method == 'GET':
         data = request.user.file_set.all()
-        serializer = FileSerializer(data, many=True)
+        serializer = FileSerializer(data, many=True, context={'request': request})
         return Response({'files': serializer.data})
     
     elif request.method == 'POST':
