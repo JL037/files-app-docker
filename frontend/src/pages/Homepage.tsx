@@ -3,17 +3,17 @@ import axios from "../Axios";
 import { Link } from 'react-router-dom';
 import { backendUrl } from '../shared';
 import { AuthContext } from '../context/Context';
-import { ImagePreviewGrid, ImagePreviewCard } from '../components/ImagePreviewCard';
+import { ImagePreviewGrid, Image  } from '../components/ImagePreviewCard';
 
 const Homepage = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const { isLoggedIn } = useContext(AuthContext);
     
-    const [files, setFiles] = useState<{ file: string, name: string }[]>([]);
-    const [file, setFile] = useState<File | null>(null);
+    const [files, setFiles] = useState<Image[] | []>([]);
+    const [file, setFile] = useState<null | File>(null);
     const [fileName, setFileName] = useState('');
-    const [preview, setPreview] = useState<string | null>(null);
+    //const [preview, setPreview] = useState<string | null>(null);
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -29,7 +29,7 @@ const Homepage = () => {
         if (event.target.files && event.target.files.length > 0) {
             const selectedFile = event.target.files[0];
             setFile(selectedFile);
-            setPreview(URL.createObjectURL(selectedFile));
+            //setPreview(URL.createObjectURL(selectedFile));
         }
     };
 
@@ -46,13 +46,13 @@ const Homepage = () => {
         formData.append('name', fileName);
 
         // Upload file to the backend
-        axios.post<{ file: string, name: string }>(backendUrl + '/api/files/', formData)
+        axios.post<Image>(backendUrl + '/api/files/', formData)
             .then(response => {
                 // Refresh the files list
                 setFiles([...files, response.data]);
                 setFile(null);
                 setFileName('');
-                setPreview(null);
+                //setPreview(null);
                 if (fileInputRef.current) {
                     fileInputRef.current.value = ''; // Clear file input
                 }
@@ -68,7 +68,7 @@ const Homepage = () => {
                     <input type="text" placeholder="Enter file name" value={fileName} onChange={handleNameChange} style={{ marginBottom: '10px' }} />
                     <button type="submit" style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px' }}>Upload</button>
                 </form>
-                {preview && <ImagePreviewCard imageUrl={preview} />}
+                {/*preview && <ImagePreviewCard imageUrl={preview} />*/}
                 <div>
                     {files ? 
                         // <div key={index}>

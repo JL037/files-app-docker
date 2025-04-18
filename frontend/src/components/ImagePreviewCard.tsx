@@ -1,12 +1,8 @@
-import { backendUrl } from "../shared";
-
-export const ImagePreviewCard = ({ imageUrl, fileName }) => {
-  //console.log(imageUrl, fileName);
+export const ImagePreviewCard = ({ imageUrl, fileName }: {imageUrl: string, fileName: string}) => {
 
   const cardStyle = {
     border: '1px solid #ddd',
     padding: '8px',
-    textAlign: 'center',
     borderRadius: '8px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     maxWidth: "200px", // Adjust width to fit better in the grid
@@ -35,13 +31,18 @@ export const ImagePreviewCard = ({ imageUrl, fileName }) => {
   );
 };
 
-export const ImagePreviewGrid = ({ images }) => {
+export type Image = {
+  file: string,
+  name: string
+}
+
+export const ImagePreviewGrid = ({ images }: {images: Image[]}) => {
   const gridStyle = {
     display: 'flex',
     flexWrap: 'wrap', // Allows the images to wrap to the next line
     justifyContent: 'flex-start', // Aligns items to the start of the container
     gap: '16px', // Adds spacing between the grid items
-  };
+  } as React.CSSProperties;
 
   return (
     <div style={gridStyle}>
